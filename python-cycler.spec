@@ -8,7 +8,7 @@
 Summary:	Composable style cycles
 Name:		python-%{module}
 Version:	0.10.0
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries/Python
 Source0:	https://github.com/matplotlib/cycler/archive/v%{version}.tar.gz
