@@ -9,6 +9,7 @@
 Summary:	Composable style cycles
 Summary(pl.UTF-8):	Komponowalne cykle styli
 Name:		python-%{module}
+# keep 0.10.x here for python2 support
 Version:	0.10.0
 Release:	7
 License:	BSD
