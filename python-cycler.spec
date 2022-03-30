@@ -11,7 +11,7 @@ Summary(pl.UTF-8):	Komponowalne cykle styli
 Name:		python-%{module}
 # keep 0.10.x here for python2 support
 Version:	0.10.0
-Release:	7
+Release:	8
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://github.com/matplotlib/cycler/releases
