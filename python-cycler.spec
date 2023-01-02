@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_with	doc	# Sphinx documentation
+%bcond_without	doc	# Sphinx documentation
 %bcond_without	tests	# unit tests
 %bcond_without	python2 # CPython 2.x module
 %bcond_without	python3 # CPython 3.x module
@@ -39,10 +39,10 @@ BuildRequires:	python3-six
 %endif
 %endif
 %if %{with doc}
-BuildRequires:	ipython3
-BuildRequires:	python3-matplotlib
-BuildRequires:	python3-numpydoc
-BuildRequires:	sphinx-pdg-3
+BuildRequires:	python-ipython
+BuildRequires:	python-matplotlib
+BuildRequires:	python-numpydoc
+BuildRequires:	sphinx-pdg-2
 %endif
 Requires:	python-modules >= 1:2.6
 BuildArch:	noarch
@@ -82,17 +82,24 @@ Dokumentacja API modułu %{module}.
 
 %build
 %if %{with python2}
-%py_build %{?with_tests:test}
+%py_build
+
+%if %{with tests}
+nosetests-%{py_ver} test_cycler.py
+%endif
 %endif
 
 %if %{with python3}
-%py3_build %{?with_tests:test}
+%py3_build
+
+%if %{with tests}
+nosetests-%{py3_ver} test_cycler.py
+%endif
 %endif
 
 %if %{with doc}
 %{__make} -C doc html \
-	SPHINXBUILD=sphinx-build-3
-%{__rm} -r doc/_build/html/_sources
+	SPHINXBUILD=sphinx-build-2
 %endif
 
 %install
@@ -114,21 +121,21 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc LICENSE README.rst
-%{py_sitescriptdir}/%{module}.py*
-%{py_sitescriptdir}/%{module}-%{version}-py*.egg-info
+%{py_sitescriptdir}/cycler.py[co]
+%{py_sitescriptdir}/cycler-%{version}-py*.egg-info
 %endif
 
 %if %{with python3}
 %files -n python3-%{module}
 %defattr(644,root,root,755)
 %doc LICENSE README.rst
-%{py3_sitescriptdir}/%{module}.py*
-%{py3_sitescriptdir}/__pycache__/%{module}*.py*
-%{py3_sitescriptdir}/%{module}-%{version}-py*.egg-info
+%{py3_sitescriptdir}/cycler.py
+%{py3_sitescriptdir}/__pycache__/cycler.cpython-*.py[co]
+%{py3_sitescriptdir}/cycler-%{version}-py*.egg-info
 %endif
 
 %if %{with doc}
 %files apidocs
 %defattr(644,root,root,755)
-%doc docs/_build/html/*
+%doc doc/build/html/{_images,_modules,_static,generated,*.html,*.js,*.png}
 %endif
