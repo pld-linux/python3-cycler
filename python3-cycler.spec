@@ -63,6 +63,7 @@ PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 %endif
 
 %if %{with doc}
+PYTHONPATH=$(pwd) \
 %{__make} -C doc html \
 	SPHINXBUILD=sphinx-build-3
 %endif
@@ -84,5 +85,5 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with doc}
 %files apidocs
 %defattr(644,root,root,755)
-%doc doc/build/html/{_images,_modules,_static,generated,*.html,*.js,*.png}
+%doc doc/build/html/{_downloads,_images,_modules,_static,generated,*.html,*.js}
 %endif
